@@ -1,5 +1,5 @@
-runtype: python
-vm: true
+runtime: python
+env: flex
 entrypoint: gunicorn -b :$PORT reverse_proxy:app
 
 runtime_config:
