@@ -65,6 +65,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def parse_headers(self):
         req_header = {}
+        self.set_cors_headers()
         for line in self.headers:
             line_parts = [o.strip() for o in line.split(':', 1)]
             if len(line_parts) == 2:
