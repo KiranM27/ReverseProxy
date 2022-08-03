@@ -69,16 +69,19 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
             line_parts = [o.strip() for o in line.split(':', 1)]
             if len(line_parts) == 2:
                 req_header[line_parts[0]] = line_parts[1]
-        req_header["Access-Control-Allow-Origin"] = "*"
-        req_header["Access-Control-Allow-Methods"] = "*"
-        req_header["Access-Control-Allow-Headers"] = "*"
-        req_header["Cache-Control"] = "no-store, no-cache, must-revalidate"
-
         return req_header
+
+    def add_cors_to_headers(self, headers):
+        headers["Access-Control-Allow-Origin"] = "*"
+        headers["Access-Control-Allow-Methods"] = "*"
+        headers["Access-Control-Allow-Headers"] = "*"
+        headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
+        return headers
 
     def send_resp_headers(self, resp):
         respheaders = resp.headers
-        print ('Response Header')
+        respheaders = self.add_cors_to_headers(respheaders)
+        print ('Response Headers')
         for key in respheaders:
             if key not in ['Content-Encoding', 'Transfer-Encoding', 'content-encoding', 'transfer-encoding', 'content-length', 'Content-Length']:
                 print (key, respheaders[key])
