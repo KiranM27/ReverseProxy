@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  app:
+    build: . #path to the root project folder
+    command: python reverse_proxy.py
+    volumes:
+      - .:/reverse_proxy
+    ports:
+      - 80:80 # sets the port that maps to internal port in docker container
