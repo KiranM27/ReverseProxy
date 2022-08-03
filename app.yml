@@ -1,0 +1,6 @@
+runtype: python
+vm: true
+entrypoint: gunicorn -b :$PORT reverse_proxy:app
+
+runtime_config:
+  python_version: 3
