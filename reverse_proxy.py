@@ -65,7 +65,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def parse_headers(self):
         req_header = {}
-        req_header["Access-Control-Allow-Origin"] = "*"
+        self.send_header("Access-Control-Allow-Origin", "*")
         for line in self.headers:
             line_parts = [o.strip() for o in line.split(':', 1)]
             if len(line_parts) == 2:
