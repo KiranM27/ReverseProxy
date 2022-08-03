@@ -7,4 +7,4 @@ services:
     volumes:
       - .:/reverse_proxy
     ports:
-      - 80:80 # sets the port that maps to internal port in docker container
+      - 8080:8080 # sets the port that maps to internal port in docker container

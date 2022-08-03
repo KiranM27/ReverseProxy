@@ -15,6 +15,6 @@ RUN pip install -r requirements.txt
 # copy project
 COPY . /app
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD python reverse_proxy.py

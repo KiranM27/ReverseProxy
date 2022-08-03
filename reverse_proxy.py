@@ -5,7 +5,8 @@ from socketserver import ThreadingMixIn
 from constants import DESTINATION_DOMAIN, REVERSE_PROXY_HOST, REVERSE_PROXY_PORT
 
 def merge_two_dicts(x, y):
-    return x | y
+    x.update(y)
+    return x
 
 def set_header():
     headers = {
@@ -28,6 +29,7 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
 
             print(req_header)
             print(url)
+            print(req_header, set_header())
             resp = requests.get(url, headers=merge_two_dicts(req_header, set_header()), verify=False)
             sent = True
 
