@@ -27,10 +27,11 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
             url = 'https://{}{}'.format(DESTINATION_DOMAIN, self.path)
             req_header = self.parse_headers()
 
-            print(req_header)
-            print(url)
-            print(req_header, set_header())
-            resp = requests.get(url, headers=merge_two_dicts(req_header, set_header()), verify=False)
+            print("*" * 30)
+            print("Request has been received and will be forwarded as ", url)
+            merged_headers = merge_two_dicts(req_header, set_header())
+            print("Request Headers - Request to Backend  - ", merged_headers)
+            resp = requests.get(url, headers=merged_headers, verify=False)
             sent = True
 
             self.send_response(resp.status_code)
@@ -81,10 +82,9 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
     def send_resp_headers(self, resp):
         respheaders = resp.headers
         respheaders = self.add_cors_to_headers(respheaders)
-        print ('Response Headers')
+        print ('Response Headers - Response to Origin - ', respheaders)
         for key in respheaders:
             if key not in ['Content-Encoding', 'Transfer-Encoding', 'content-encoding', 'transfer-encoding', 'content-length', 'Content-Length']:
-                print (key, respheaders[key])
                 self.send_header(key, respheaders[key])
         self.send_header('Content-Length', len(resp.content))
         self.end_headers()
